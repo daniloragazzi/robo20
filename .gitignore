@@ -1,0 +1,70 @@
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+
+# ===========================
+# Node / Frontend
+# ===========================
+node_modules/
+frontend/dist/
+
+# ===========================
+# Environment
+# ===========================
+.env
+.env.local
+.env.*.local
+
+# ===========================
+# IDE
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+
+# ===========================
+# Docker
+# ===========================
+docker/data/
+
+# ===========================
+# Vite cache
+# ===========================
+.vite/
+
+# ===========================
+# Debug scripts / images
+# ===========================
+*.png
+backend/mss_*.py
+backend/compare_*.py
+backend/test_*.py
+!backend/tests/
+
+# ===========================
+# Misc
+# ===========================
+*.log
+coverage/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
