@@ -13,6 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.candles import router as candles_router
 from app.api.health import router as health_router
 from app.api.indicators import router as indicators_router
+from app.api.strategies import router as strategies_router
 from app.connectors.bybit import BybitConnector
 from app.ws.candles import router as ws_candles_router
 from app.core.database import AsyncSessionLocal
@@ -67,4 +68,5 @@ app.add_middleware(
 app.include_router(health_router, prefix="/api")
 app.include_router(candles_router, prefix="/api")
 app.include_router(indicators_router, prefix="/api")
+app.include_router(strategies_router, prefix="/api")
 app.include_router(ws_candles_router, prefix="/ws")

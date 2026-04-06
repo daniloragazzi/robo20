@@ -97,6 +97,7 @@ class StrategyStep(Base):
     )
     condition_type: Mapped[str] = mapped_column(String(60), nullable=False)
     condition_value: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    condition_tree: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     strategy: Mapped[Strategy] = relationship("Strategy", back_populates="steps")
