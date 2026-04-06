@@ -374,7 +374,8 @@ function renderIndicatorSeries(
     const midKey = [...allKeys].find((k) => k.startsWith("BBM"));
     const lowerKey = [...allKeys].find((k) => k.startsWith("BBL"));
 
-    const bbColors = ["#3b82f6", "#6b7280", "#3b82f6"];
+    const bandColor = (inst.params as Record<string, unknown>).color as string ?? "#3b82f6";
+    const bbColors = [bandColor, "#6b7280", bandColor];
     const bbKeys = [upperKey, midKey, lowerKey];
 
     for (let i = 0; i < bbKeys.length; i++) {
@@ -400,6 +401,7 @@ function renderIndicatorSeries(
 
   // RSI — line series (oscillator pane via separate priceScale)
   else if (type === "rsi") {
+    const rsiColor = (inst.params as Record<string, unknown>).color as string ?? "#a855f7";
     for (const key of allKeys) {
       const lineData = points
         .filter((p) => p.values[key] != null)
@@ -407,7 +409,7 @@ function renderIndicatorSeries(
       if (!lineData.length) continue;
 
       const s = chart.addLineSeries({
-        color: "#a855f7",
+        color: rsiColor,
         lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: true,
@@ -430,13 +432,16 @@ function renderIndicatorSeries(
     const signalKey = [...allKeys].find((k) => k.startsWith("MACDs_"));
     const histKey = [...allKeys].find((k) => k.startsWith("MACDh_"));
 
+    const colorMacd = (inst.params as Record<string, unknown>).color_macd as string ?? "#3b82f6";
+    const colorSignal = (inst.params as Record<string, unknown>).color_signal as string ?? "#f59e0b";
+
     if (macdKey) {
       const lineData = points
         .filter((p) => p.values[macdKey] != null)
         .map((p) => ({ time: toTime(p.ts), value: p.values[macdKey]! }));
       if (lineData.length) {
         const s = chart.addLineSeries({
-          color: "#3b82f6",
+          color: colorMacd,
           lineWidth: 1,
           priceLineVisible: false,
           lastValueVisible: false,
@@ -453,7 +458,7 @@ function renderIndicatorSeries(
         .map((p) => ({ time: toTime(p.ts), value: p.values[signalKey]! }));
       if (lineData.length) {
         const s = chart.addLineSeries({
-          color: "#f59e0b",
+          color: colorSignal,
           lineWidth: 1,
           priceLineVisible: false,
           lastValueVisible: false,
@@ -493,7 +498,10 @@ function renderIndicatorSeries(
     const kKey = [...allKeys].find((k) => k.startsWith("STOCHk"));
     const dKey = [...allKeys].find((k) => k.startsWith("STOCHd"));
 
-    for (const [key, c] of [[kKey, "#3b82f6"], [dKey, "#f59e0b"]] as const) {
+    const colorK = (inst.params as Record<string, unknown>).color_k as string ?? "#3b82f6";
+    const colorD = (inst.params as Record<string, unknown>).color_d as string ?? "#f59e0b";
+
+    for (const [key, c] of [[kKey, colorK], [dKey, colorD]] as const) {
       if (!key) continue;
       const lineData = points
         .filter((p) => p.values[key] != null)
@@ -518,13 +526,14 @@ function renderIndicatorSeries(
 
   // ATR — line in its own pane
   else if (type === "atr") {
+    const atrColor = (inst.params as Record<string, unknown>).color as string ?? "#06b6d4";
     for (const key of allKeys) {
       const lineData = points
         .filter((p) => p.values[key] != null)
         .map((p) => ({ time: toTime(p.ts), value: p.values[key]! }));
       if (!lineData.length) continue;
       const s = chart.addLineSeries({
-        color: "#06b6d4",
+        color: atrColor,
         lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: true,
@@ -542,6 +551,7 @@ function renderIndicatorSeries(
 
   // Volume — histogram in its own pane
   else if (type === "volume") {
+    const volColor = (inst.params as Record<string, unknown>).color as string ?? "#6b7280";
     const volSmaKey = [...allKeys].find((k) => k === "vol_sma");
     if (volSmaKey) {
       const lineData = points
@@ -549,7 +559,7 @@ function renderIndicatorSeries(
         .map((p) => ({ time: toTime(p.ts), value: p.values[volSmaKey]! }));
       if (lineData.length) {
         const s = chart.addLineSeries({
-          color: "#6b7280",
+          color: volColor,
           lineWidth: 1,
           priceLineVisible: false,
           lastValueVisible: false,

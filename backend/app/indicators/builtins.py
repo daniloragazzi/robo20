@@ -96,6 +96,8 @@ class MACDIndicator:
             "fast": {"type": "integer", "default": 12, "minimum": 1},
             "slow": {"type": "integer", "default": 26, "minimum": 1},
             "signal": {"type": "integer", "default": 9, "minimum": 1},
+            "color_macd": {"type": "string", "default": "#3b82f6", "description": "Cor da linha MACD"},
+            "color_signal": {"type": "string", "default": "#f59e0b", "description": "Cor da linha Signal"},
         },
         "required": ["fast", "slow", "signal"],
     }
@@ -124,6 +126,7 @@ class BollingerIndicator:
         "properties": {
             "length": {"type": "integer", "default": 20, "minimum": 1},
             "std": {"type": "number", "default": 2.0, "minimum": 0.1},
+            "color": {"type": "string", "default": "#3b82f6", "description": "Cor das bandas"},
         },
         "required": ["length", "std"],
     }
@@ -150,6 +153,7 @@ class ATRIndicator:
         "type": "object",
         "properties": {
             "length": {"type": "integer", "default": 14, "minimum": 1},
+            "color": {"type": "string", "default": "#06b6d4", "description": "Cor da linha"},
         },
         "required": ["length"],
     }
@@ -172,6 +176,7 @@ class VolumeIndicator:
         "type": "object",
         "properties": {
             "sma_length": {"type": "integer", "default": 20, "minimum": 1, "description": "Volume SMA overlay"},
+            "color": {"type": "string", "default": "#6b7280", "description": "Cor da linha"},
         },
     }
 
@@ -195,6 +200,8 @@ class StochasticIndicator:
             "k": {"type": "integer", "default": 14, "minimum": 1},
             "d": {"type": "integer", "default": 3, "minimum": 1},
             "smooth_k": {"type": "integer", "default": 3, "minimum": 1},
+            "color_k": {"type": "string", "default": "#3b82f6", "description": "Cor da linha %K"},
+            "color_d": {"type": "string", "default": "#f59e0b", "description": "Cor da linha %D"},
         },
         "required": ["k", "d"],
     }

@@ -92,7 +92,17 @@ export function IndicatorPanel() {
                 key={inst.id}
                 className="mt-1 flex items-center justify-between rounded bg-zinc-900 px-2 py-1.5"
               >
-                <div>
+                <div className="flex items-center gap-1.5">
+                  {(() => {
+                    const p = inst.params as Record<string, unknown>;
+                    const c = (p.color ?? p.color_macd ?? p.color_k) as string | undefined;
+                    return c ? (
+                      <span
+                        className="inline-block h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: c }}
+                      />
+                    ) : null;
+                  })()}
                   <span className="text-xs font-medium text-zinc-200">
                     {inst.label || inst.indicator_type.toUpperCase()}
                   </span>
@@ -121,7 +131,7 @@ export function IndicatorPanel() {
             {/* Dynamic params */}
             <div className="mt-2 space-y-2">
               {Object.entries(adding.params_schema.properties)
-                .filter(([key]) => key !== "color")
+                .filter(([key]) => !key.startsWith("color"))
                 .map(([key, def]) => (
                   <label key={key} className="block">
                     <span className="text-xs text-zinc-400">
@@ -141,6 +151,25 @@ export function IndicatorPanel() {
                       }}
                       className="mt-0.5 w-full rounded border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-zinc-100 outline-none focus:border-zinc-500"
                     />
+                  </label>
+                ))}
+
+              {/* Color pickers */}
+              {Object.entries(adding.params_schema.properties)
+                .filter(([key, def]) => key.startsWith("color") && def.type === "string")
+                .map(([key, def]) => (
+                  <label key={key} className="flex items-center gap-2">
+                    <input
+                      type="color"
+                      value={String(formParams[key] ?? def.default ?? "#ffffff")}
+                      onChange={(e) =>
+                        setFormParams({ ...formParams, [key]: e.target.value })
+                      }
+                      className="h-6 w-6 cursor-pointer rounded border border-zinc-700 bg-transparent p-0"
+                    />
+                    <span className="text-xs text-zinc-400">
+                      {def.description || key}
+                    </span>
                   </label>
                 ))}
 
